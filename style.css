@@ -1,7 +1,7 @@
 .leadBox {
   display: inline-flex; 
   border: 1px solid black; 
-  margin: 2px 4px; 
+  margin: 2px; 
   padding: 2px 4px; 
   align-items: center;
   border-radius: 4px;
@@ -18,7 +18,7 @@
   border-style: solid;
   border-color: #333;
   border-width: 1px 0;
-  padding: 5px;
+  padding: 5px 3px;
 }
 
 button:disabled {
@@ -29,8 +29,10 @@ th {
   vertical-align: top;
   text-align: right;
   font-size: 14px;
+  padding: 0;
 }
 
 td {
   vertical-align: top;
+  padding: 0;
 } 

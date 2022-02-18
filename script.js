@@ -39,7 +39,7 @@ const app = Vue.createApp({
 
           <button 
             @click="investigate()"
-            style="width: 100%; border-radius: 9999px; padding: 5px; margin: 20px 0;"
+            style="width: 100%; border-radius: 9999px; padding: 5px; margin: 10px 0;"
             :disabled="arrested || !remainingGuesses"
           >
             <span v-if="arrested">
@@ -58,13 +58,13 @@ const app = Vue.createApp({
       <div class="guesses" ref="guesses">
         <div 
           v-for="(guess, index) in guesses" 
-          style="margin: 10px; border: 1px solid #333; border-radius: 10px; padding: 10px; color: #fff;"
+          style="margin: 5px; border: 1px solid #333; border-radius: 10px; padding: 5px; color: #fff;"
           :style="{ background: numberOfCorrectLeads(guess) == 3 ? 'green' : '#333'}"
         >
-          <div>
+          <div style="margin: 2px;">
             #{{index + 1}}:
             <span v-if="numberOfCorrectLeads(guess)">
-              ✅x{{numberOfCorrectLeads(guess)}}
+              ✅ × {{numberOfCorrectLeads(guess)}}
             </span>
             <span v-else>
               ❌
