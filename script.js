@@ -58,10 +58,10 @@ const app = Vue.createApp({
       <div class="guesses" ref="guesses">
         <div 
           v-for="(guess, index) in guesses" 
-          style="margin: 5px; border: 1px solid #333; border-radius: 10px; padding: 5px; color: #fff; text-align: center;"
+          style="margin: 5px; border: 1px solid #333; border-radius: 10px; padding: 3px; color: #fff; text-align: center;"
           :style="{ background: numberOfCorrectLeads(guess) == 3 ? 'green' : '#333'}"
         >
-          <div style="margin: 2px;">
+          <div>
             #{{index + 1}}:
             <span v-if="numberOfCorrectLeads(guess)">
               ✅ × {{numberOfCorrectLeads(guess)}}
