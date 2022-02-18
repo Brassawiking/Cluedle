@@ -4,11 +4,11 @@ const sfx_hmm2 = new Audio('hmm2.mp3')
 const sfx_arrest = new Audio('arrest.mp3')
 
 const suspects = [
-  { type: 'suspect', icon: '🤓', name: 'Von Ludendorf' },
+  { type: 'suspect', icon: '🤓', name: 'Ludendorf' },
   { type: 'suspect', icon: '😍', name: 'Dr Svett' },
-  { type: 'suspect', icon: '😎', name: 'Mr Hallburg' },
-  { type: 'suspect', icon: '🧐', name: 'General Rumpmas' },
-  { type: 'suspect', icon: '🤠', name: 'Officer Pattapat' },
+  { type: 'suspect', icon: '😎', name: 'Hallburg' },
+  { type: 'suspect', icon: '🧐', name: 'Rumpmas' },
+  { type: 'suspect', icon: '🤠', name: 'Pattapat' },
 ]
 
 const items = [
