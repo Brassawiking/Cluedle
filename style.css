@@ -23,3 +23,12 @@
 button:disabled {
   color: #000;
 }
+
+th {
+  vertical-align: top;
+  text-align: right;
+}
+
+td {
+  vertical-align: top;
+} 

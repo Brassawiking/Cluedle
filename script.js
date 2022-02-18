@@ -7,7 +7,7 @@ const suspects = [
   { type: 'suspect', icon: '🤓', name: 'Von Ludendorf' },
   { type: 'suspect', icon: '😍', name: 'Dr Svett' },
   { type: 'suspect', icon: '😎', name: 'Mr Hallburg' },
-  { type: 'suspect', icon: '😵', name: 'General Rumpmas' },
+  { type: 'suspect', icon: '🧐', name: 'General Rumpmas' },
   { type: 'suspect', icon: '🤠', name: 'Officer Pattapat' },
 ]
 
@@ -84,20 +84,32 @@ const app = Vue.createApp({
       </div>
 
       <div style="padding: 5px;">
-        Suspect
-        <div style="display: flex; flex-wrap: wrap;">
-          <LeadBox v-for="suspect in suspects" :lead="suspect" @click="addToGuess(suspect)"/>
-        </div>
-        
-        Item
-        <div style="display: flex; flex-wrap: wrap;">
-          <LeadBox v-for="item in items" :lead="item" @click="addToGuess(item)"/>
-        </div>
-
-        Room
-        <div style="display: flex; flex-wrap: wrap;">
-          <LeadBox v-for="room in rooms" :lead="room" @click="addToGuess(room)"/>
-        </div>
+        <table>
+          <tr>
+            <th>
+              Suspect
+            </th>
+            <td>
+              <LeadBox v-for="suspect in suspects" :lead="suspect" @click="addToGuess(suspect)"/>
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Item    
+            </th>
+            <td>
+              <LeadBox v-for="item in items" :lead="item" @click="addToGuess(item)"/>  
+            </td>
+          </tr>
+          <tr>
+            <th>
+              Room    
+            </th>
+            <td>
+              <LeadBox v-for="room in rooms" :lead="room" @click="addToGuess(room)"/>  
+            </td>
+          </tr>
+        </table>
       </div>
     </div>
   `,
