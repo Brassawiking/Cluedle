@@ -83,33 +83,16 @@ const app = Vue.createApp({
         </div>
       </div>
 
-      <div style="padding: 3px;">
-        <table>
-          <tr>
-            <th>
-              Suspect
-            </th>
-            <td>
-              <LeadBox v-for="suspect in suspects" :lead="suspect" @click="addToGuess(suspect)"/>
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Item    
-            </th>
-            <td>
-              <LeadBox v-for="item in items" :lead="item" @click="addToGuess(item)"/>  
-            </td>
-          </tr>
-          <tr>
-            <th>
-              Room    
-            </th>
-            <td>
-              <LeadBox v-for="room in rooms" :lead="room" @click="addToGuess(room)"/>  
-            </td>
-          </tr>
-        </table>
+      <div>
+        <div style="margin: 5px;">
+          <LeadBox v-for="suspect in suspects" :lead="suspect" @click="addToGuess(suspect)"/>
+        </div>
+        <div style="margin: 5px;">
+          <LeadBox v-for="room in rooms" :lead="room" @click="addToGuess(room)"/>  
+        </div>
+        <div style="margin: 5px;">
+          <LeadBox v-for="item in items" :lead="item" @click="addToGuess(item)"/>  
+        </div>
       </div>
     </div>
   `,
