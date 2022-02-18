@@ -75,8 +75,11 @@ const app = Vue.createApp({
           </div>
         </div>
 
-        <div style="display: flex; flex-wrap: wrap;">
+        <div style="margin: 5px;">
           <LeadBox v-for="lead in currentGuess" :lead="lead"/>
+          <span v-if="currentGuess.length < 1">??? </span>
+          <span v-if="currentGuess.length < 2">??? </span>
+          <span v-if="currentGuess.length < 3">??? </span>
           <button v-if="currentGuess.length" style="border-radius: 4px; background: #000; color: #fff;" @click="undoLead()">
             ↩
           </button>
