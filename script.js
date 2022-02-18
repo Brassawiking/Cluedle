@@ -83,7 +83,7 @@ const app = Vue.createApp({
         </div>
       </div>
 
-      <div style="padding: 5px;">
+      <div style="padding: 3px;">
         <table>
           <tr>
             <th>
