@@ -58,7 +58,7 @@ const app = Vue.createApp({
       <div class="guesses" ref="guesses">
         <div 
           v-for="(guess, index) in guesses" 
-          style="margin: 5px; border: 1px solid #333; border-radius: 10px; padding: 5px; color: #fff;"
+          style="margin: 5px; border: 1px solid #333; border-radius: 10px; padding: 5px; color: #fff; text-align: center;"
           :style="{ background: numberOfCorrectLeads(guess) == 3 ? 'green' : '#333'}"
         >
           <div style="margin: 2px;">
@@ -70,12 +70,10 @@ const app = Vue.createApp({
               ❌
             </span>
           </div>
-          <div v-for="lead in guess" style="display: inline-flex; flex-wrap: wrap; align-items: center;">
-            <LeadBox :lead="lead"/>
-          </div>
+          <LeadBox v-for="lead in guess" :lead="lead"/>
         </div>
 
-        <div style="margin: 5px;">
+        <div style="margin: 5px; text-align: center">
           <LeadBox v-for="lead in currentGuess" :lead="lead"/>
           <span v-if="currentGuess.length < 1">??? </span>
           <span v-if="currentGuess.length < 2">??? </span>
@@ -86,7 +84,7 @@ const app = Vue.createApp({
         </div>
       </div>
 
-      <div>
+      <div style="text-align: center;">
         <div style="margin: 5px;">
           <LeadBox v-for="suspect in suspects" :lead="suspect" @click="addToGuess(suspect)"/>
         </div>
