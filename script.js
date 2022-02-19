@@ -15,7 +15,7 @@ const items = [
   { type: 'item', icon: '💉', name: 'Poison' },
   { type: 'item', icon: '🔪', name: 'Knife' },
   { type: 'item', icon: '🔫', name: 'Gun' },
-  { type: 'item', icon: '🕰', name: 'Clock' },
+  { type: 'item', icon: '🕰️', name: 'Clock' },
   { type: 'item', icon: '🏺', name: 'Vase' },
 ]
 
@@ -25,6 +25,14 @@ const rooms = [
   { type: 'room', color: '#00ffff', name: 'Living' },
   { type: 'room', color: '#ffff00', name: 'Storage' },
   { type: 'room', color: '#ff00ff', name: 'Bedroom' },
+]
+
+const times = [
+  { type: 'time', icon: '⏳', name: '08:00' },
+  { type: 'time', icon: '⏳', name: '09:00' },
+  { type: 'time', icon: '⏳', name: '10:00' },
+  { type: 'time', icon: '⏳', name: '11:00' },
+  { type: 'time', icon: '⏳', name: '12:00' },
 ]
 
 const app = Vue.createApp({
@@ -59,7 +67,7 @@ const app = Vue.createApp({
         <div 
           v-for="(guess, index) in guesses" 
           style="margin: 5px; border: 1px solid #333; border-radius: 10px; padding: 3px; color: #fff; text-align: center;"
-          :style="{ background: numberOfCorrectLeads(guess) == 3 ? 'green' : '#333'}"
+          :style="{ background: numberOfCorrectLeads(guess) == numberOfSolutionLeads ? 'green' : '#333'}"
         >
           <div>
             #{{index + 1}}:
@@ -75,9 +83,9 @@ const app = Vue.createApp({
 
         <div style="margin: 5px; text-align: center">
           <LeadBox v-for="lead in currentGuess" :lead="lead"/>
-          <span v-if="currentGuess.length < 1">??? </span>
-          <span v-if="currentGuess.length < 2">??? </span>
-          <span v-if="currentGuess.length < 3">??? </span>
+          <span v-for="n in (numberOfSolutionLeads - currentGuess.length)">
+            ??? 
+          </span>
           <button v-if="currentGuess.length" style="border-radius: 4px; background: #000; color: #fff;" @click="undoLead()">
             ↩
           </button>
@@ -94,6 +102,9 @@ const app = Vue.createApp({
         <div style="margin: 5px;">
           <LeadBox v-for="item in items" :lead="item" @click="addToGuess(item)"/>  
         </div>
+        <div style="margin: 5px;">
+          <LeadBox v-for="time in times" :lead="time" @click="addToGuess(time)"/>  
+        </div>
       </div>
     </div>
   `,
@@ -103,6 +114,7 @@ const app = Vue.createApp({
         suspect: suspects[Math.floor(Math.random() * suspects.length)],
         item: items[Math.floor(Math.random() * items.length)],
         room: rooms[Math.floor(Math.random() * rooms.length)],
+        time: times[Math.floor(Math.random() * times.length)],
       },
       maxGuesses: 10,
       guesses: [],
@@ -114,13 +126,15 @@ const app = Vue.createApp({
     suspects() { return suspects },
     items() { return items },
     rooms() { return rooms },
-    remainingGuesses() { return this.maxGuesses - this.guesses.length }
+    times() { return times },
+    remainingGuesses() { return this.maxGuesses - this.guesses.length },
+    numberOfSolutionLeads() { return 4 }
   },
   methods: {
     investigate() {
-      if (this.currentGuess.length == 3) {
+      if (this.currentGuess.length == this.numberOfSolutionLeads) {
         const correctLeads = this.numberOfCorrectLeads(this.currentGuess)
-        if (correctLeads == 3) {
+        if (correctLeads === this.numberOfSolutionLeads) {
           sfx_arrest.play()
           this.arrested = true
         } else if (correctLeads > 0) {
@@ -144,6 +158,9 @@ const app = Vue.createApp({
       if (guess.includes(this.solution.room)) {
         result++
       }
+      if (guess.includes(this.solution.time)) {
+        result++
+      }
       return result
     },
     undoLead() {
@@ -151,7 +168,7 @@ const app = Vue.createApp({
       this.scrollToBottom()    
     },
     addToGuess(lead) {
-      if (this.currentGuess.length < 3 && !this.arrested) {
+      if (this.currentGuess.length < this.numberOfSolutionLeads && !this.arrested) {
         this.currentGuess.push(lead)
         this.scrollToBottom()
       }
