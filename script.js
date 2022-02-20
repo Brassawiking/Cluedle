@@ -93,17 +93,8 @@ const app = Vue.createApp({
       </div>
 
       <div style="text-align: center;">
-        <div style="margin: 5px;">
-          <LeadBox v-for="suspect in suspects" :lead="suspect" @click="addToGuess(suspect)"/>
-        </div>
-        <div style="margin: 5px;">
-          <LeadBox v-for="room in rooms" :lead="room" @click="addToGuess(room)"/>  
-        </div>
-        <div style="margin: 5px;">
-          <LeadBox v-for="item in items" :lead="item" @click="addToGuess(item)"/>  
-        </div>
-        <div style="margin: 5px;">
-          <LeadBox v-for="time in times" :lead="time" @click="addToGuess(time)"/>  
+        <div v-for="leads in [suspects, rooms, items, times]"style="margin: 5px;">
+          <LeadBox v-for="lead in leads" :lead="lead" :eliminated="eliminations.has(lead)" @click="addToGuess(lead)"/>
         </div>
       </div>
     </div>
@@ -116,10 +107,11 @@ const app = Vue.createApp({
         room: rooms[Math.floor(Math.random() * rooms.length)],
         time: times[Math.floor(Math.random() * times.length)],
       },
-      maxGuesses: 10,
+      maxGuesses: 8,
       guesses: [],
       currentGuess: [],
-      arrested: false
+      arrested: false,
+      eliminations: new Set()
     }
   },
   computed: {
@@ -141,6 +133,7 @@ const app = Vue.createApp({
           sfx_hmm1.play()
         } else {
           sfx_hmm2.play()
+          this.currentGuess.forEach(lead => this.eliminations.add(lead))
         }
         this.guesses.push(this.currentGuess)
         this.currentGuess = []
@@ -182,9 +175,9 @@ const app = Vue.createApp({
 })
 
 app.component('LeadBox', {
-  props: ['lead'],
+  props: ['lead', 'eliminated'],
   template: `
-    <div class="leadBox" :style=" { background: lead.color }">
+    <div class="leadBox" :style=" { background: eliminated ? '#999' : lead.color }">
       <div v-if="lead.icon" style="margin-right: 4px;">{{ lead.icon }}</div>
       <div>{{ lead.name }}</div>
     </div>
