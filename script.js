@@ -37,7 +37,16 @@ const times = [
 
 const app = Vue.createApp({
   template: `
-    <div style="height: 100%; display: flex; flex-direction: column;">
+    <div v-if="!solution" style="height: 100%; display: flex; flex-direction: column; text-align: center; padding: 10px; justify-content: center; ">
+      <h1 style="margin: 10px 0;">Cluedle</h1>
+      <button @click="start(true)" style="height: 50px; margin: 10px 0; border-radius: 999px;">
+        Daily [{{ today }}]
+      </button>
+      <button @click="start(false)" style="height: 50px; margin: 10px 0; border-radius: 999px;">
+        Random
+      </button>
+    </div>
+    <div v-else style="height: 100%; display: flex; flex-direction: column;">
       <div style="display: flex; padding: 5px;">
         <div>
           <img src="investigator.svg"/>
@@ -93,7 +102,7 @@ const app = Vue.createApp({
       </div>
 
       <div style="text-align: center;">
-        <div v-for="leads in [suspects, rooms, items, times]"style="margin: 5px;">
+        <div v-for="leads in [suspects, rooms, items, times]" style="margin: 5px;">
           <LeadBox v-for="lead in leads" :lead="lead" :eliminated="eliminations.has(lead)" @click="addToGuess(lead)"/>
         </div>
       </div>
@@ -101,12 +110,7 @@ const app = Vue.createApp({
   `,
   data() {
     return {
-      solution: {
-        suspect: suspects[Math.floor(Math.random() * suspects.length)],
-        item: items[Math.floor(Math.random() * items.length)],
-        room: rooms[Math.floor(Math.random() * rooms.length)],
-        time: times[Math.floor(Math.random() * times.length)],
-      },
+      solution: null,
       maxGuesses: 8,
       guesses: [],
       currentGuess: [],
@@ -115,6 +119,10 @@ const app = Vue.createApp({
     }
   },
   computed: {
+    today() {
+      const today = new Date()
+      return `${today.getFullYear()}-${(today.getMonth()+1).toString().padStart(2, 0)}-${today.getDate().toString().padStart(2, 0)}`
+    },
     suspects() { return suspects },
     items() { return items },
     rooms() { return rooms },
@@ -123,6 +131,18 @@ const app = Vue.createApp({
     numberOfSolutionLeads() { return 4 }
   },
   methods: {
+    start(daily) {
+      const randomiser = daily 
+        ? new Math.seedrandom(this.today)
+        : () => { Math.random() }
+
+      this.solution = {
+        suspect: suspects[Math.floor(randomiser() * suspects.length)],
+        item: items[Math.floor(randomiser() * items.length)],
+        room: rooms[Math.floor(randomiser() * rooms.length)],
+        time: times[Math.floor(randomiser() * times.length)],
+      }
+    }, 
     investigate() {
       if (this.currentGuess.length == this.numberOfSolutionLeads) {
         const correctLeads = this.numberOfCorrectLeads(this.currentGuess)
