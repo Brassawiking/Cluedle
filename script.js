@@ -134,7 +134,7 @@ const app = Vue.createApp({
     start(daily) {
       const randomiser = daily 
         ? new Math.seedrandom(this.today)
-        : () => { Math.random() }
+        : () => Math.random()
 
       this.solution = {
         suspect: suspects[Math.floor(randomiser() * suspects.length)],
